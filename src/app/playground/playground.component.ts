@@ -22,12 +22,15 @@ export class PlaygroundComponent implements OnInit {
     );
 
     //  Invoke API to emit the new values
+    //  None of these values are emitted
+    //  Subject emits only the final value
+    //  that is the last one before it completed
     this.dataService.message = 'A';
     this.dataService.message = 'B';
     this.dataService.message = 'C';
 
     //  Second subscriber added
-    //  Gets all the  values emitted so far in the order
+    //  Should wait till the completion
     this.stream$.subscribe(
       data => console.log('Second Subscriber Data', data),
       error => console.error('Second Subscriber Error', error),
@@ -38,5 +41,12 @@ export class PlaygroundComponent implements OnInit {
     //  Now, first and second subscribers are called in the order
 
     this.dataService.message = 'D';
+    this.dataService.message = 'E';
+    this.dataService.message = 'F';
+
+    //  Completion
+    //  Every subscriber gets the final value 'F'
+
+    this.dataService.complete();
   }
 }

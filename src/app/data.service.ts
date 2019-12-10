@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Subject, BehaviorSubject, ReplaySubject, AsyncSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private stateSubject = new ReplaySubject<string>();
+  private stateSubject = new AsyncSubject<string>();
 
   //  Expose the observable to the clients
   //  This is a read-only stream
@@ -20,5 +20,9 @@ export class DataService {
     } else {
       console.log('API validation error');
     }
+  }
+
+  complete() {
+    this.stateSubject.complete();
   }
 }

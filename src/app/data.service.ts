@@ -25,4 +25,8 @@ export class DataService {
   complete() {
     this.stateSubject.complete();
   }
+
+  error() {
+    this.stateSubject.error(new Error('Subject erred'));
+  }
 }

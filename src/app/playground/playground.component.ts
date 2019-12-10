@@ -48,5 +48,24 @@ export class PlaygroundComponent implements OnInit {
     //  Every subscriber gets the final value 'F'
 
     this.dataService.complete();
+
+    //  Edge case 1: new subscribers after completion
+
+    //  Third subscriber added
+    //  Gets the final value 'F' as it completed already
+    //  Completion is called on the new subscriber immediately
+    this.stream$.subscribe(
+      data => console.log('Third Subscriber Data', data),
+      error => console.error('Third Subscriber Error', error),
+      () => console.log('Third Subscriber Complete')
+    );
+
+    //  Edge case 2: error after completion
+    //  No effect
+    this.dataService.error();
+
+    //  Edge case 3: If the subject errors,
+    //  even the error callback on new subscribers (added after error)
+    //  will be called. No data is emitted however.
   }
 }

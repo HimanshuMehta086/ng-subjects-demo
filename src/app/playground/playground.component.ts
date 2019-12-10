@@ -38,5 +38,31 @@ export class PlaygroundComponent implements OnInit {
     //  Now, first and second subscribers are called in the order
 
     this.dataService.message = 'D';
+    this.dataService.message = 'E';
+    this.dataService.message = 'F';
+
+    //  Edge case 1: new subscriber after completion
+
+    //  If it erred, the previous subscribers'
+    //  error is called.
+    //  For new subscribers, the values are replayed
+    //  and error on them will be called after replay.
+    // this.dataService.error();  //  interesting case
+
+    //  complete
+    this.dataService.complete();
+
+    //  Third subscriber added
+    //  Gets all the  values emitted so far in the order,
+    //  even though the subject is long back completed
+    this.stream$.subscribe(
+      data => console.log('Third Subscriber Data', data),
+      error => console.error('Third Subscriber Error', error),
+      () => console.log('Third Subscriber Complete')
+    );
+
+    //  Edge case 2: error after complete
+    //  No effect
+    this.dataService.error();
   }
 }

@@ -21,4 +21,12 @@ export class DataService {
       console.log('API validation error');
     }
   }
+
+  complete() {
+    this.stateSubject.complete();
+  }
+
+  error() {
+    this.stateSubject.error();
+  }
 }

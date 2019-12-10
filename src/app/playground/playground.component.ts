@@ -28,7 +28,6 @@ export class PlaygroundComponent implements OnInit {
 
     //  Second subscriber added
     //  Should wait till the next event
-    //  First subscriber
     this.stream$.subscribe(
       data => console.log('Second Subscriber Data', data),
       error => console.error('Second Subscriber Error', error),
@@ -39,5 +38,24 @@ export class PlaygroundComponent implements OnInit {
     //  Now, first and second subscribers are called in the order
 
     this.dataService.message = 'D';
+
+    //  Edge case 1: new subscriber after completion
+    //  Completion
+    this.dataService.complete();
+
+    //  Gets only completion notification
+    //  By the time of this subscription,
+    //  the stream is complete.
+    //  If by this time, stream errored,
+    //  error callback in this will be called
+    this.stream$.subscribe(
+      data => console.log('Third Subscriber Data', data),
+      error => console.error('Third Subscriber Error', error),
+      () => console.log('Third Subscriber Complete')
+    );
+
+    //  Edge case 2: Error after completion
+    //  No effect
+    this.dataService.error();
   }
 }

@@ -15,6 +15,7 @@ export class PlaygroundComponent implements OnInit {
 
   ngOnInit() {
     //  First subscriber
+    //  Immediately gets the initial value
     this.stream$.subscribe(
       data => console.log('First Subscriber Data', data),
       error => console.error('First Subscriber Error', error),
@@ -27,8 +28,7 @@ export class PlaygroundComponent implements OnInit {
     this.dataService.message = 'C';
 
     //  Second subscriber added
-    //  Should wait till the next event
-    //  First subscriber
+    //  Gets the most recent value emitted ('C' in this case)
     this.stream$.subscribe(
       data => console.log('Second Subscriber Data', data),
       error => console.error('Second Subscriber Error', error),

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  //  BehaviorSubject needs an initial value
-  private stateSubject = new BehaviorSubject<string>('Default');
+  private stateSubject = new ReplaySubject<string>();
 
   //  Expose the observable to the clients
   //  This is a read-only stream

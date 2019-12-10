@@ -28,7 +28,6 @@ export class PlaygroundComponent implements OnInit {
 
     //  Second subscriber added
     //  Should wait till the next event
-    //  First subscriber
     this.stream$.subscribe(
       data => console.log('Second Subscriber Data', data),
       error => console.error('Second Subscriber Error', error),

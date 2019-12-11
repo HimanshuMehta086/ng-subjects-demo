@@ -27,6 +27,6 @@ export class DataService {
   }
 
   error() {
-    this.stateSubject.error();
+    this.stateSubject.error(new Error('Subject erred'));
   }
 }
